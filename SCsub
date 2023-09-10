@@ -1,0 +1,18 @@
+#!/usr/bin/env python
+
+Import("env")
+Import("env_modules")
+
+env_cassie = env_modules.Clone()
+
+triangulation_sources = ["thirdparty/multipolygon_triangulator/DMWT.cpp", 
+                         "thirdparty/multipolygon_triangulator/EdgeInfo.cpp",]
+
+triangulation_includes = ["thirdparty/multipolygon_triangulator"]
+
+env_cassie.Append(CPPPATH=triangulation_includes)
+
+env_cassie.add_source_files(env.modules_sources, triangulation_sources)
+
+env_cassie.add_source_files(env.modules_sources, "*.cpp")
+env_cassie.add_source_files(env.modules_sources, "src/*.cpp")
