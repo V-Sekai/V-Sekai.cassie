@@ -2,11 +2,11 @@
 
 #include "thirdparty/eigen/Eigen/Core"
 
-void refine_patch(const Eigen::MatrixXd& V, const Eigen::MatrixXi& F, float targetEdgeLength, //
-    Eigen::MatrixXd& V_fine, Eigen::MatrixXi& F_fine);
+void refine_patch(const Eigen::MatrixXd &V, const Eigen::MatrixXi &F, float targetEdgeLength, //
+		Eigen::MatrixXd &V_fine, Eigen::MatrixXi &F_fine);
 
-#include <iterator>
 #include <fstream>
+#include <iterator>
 #include <vector>
 
 #include "core/variant/variant.h"

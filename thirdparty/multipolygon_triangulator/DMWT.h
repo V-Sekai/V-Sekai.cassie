@@ -20,13 +20,14 @@
  */
 class MultiPolygonTriangulator : public RefCounted {
 	GDCLASS(MultiPolygonTriangulator, RefCounted);
+
 protected:
 	static void _bind_methods();
-public:
 
-    static Ref<MultiPolygonTriangulator> _create();
-    static Ref<MultiPolygonTriangulator> _create_with_degenerates(int ptn, double *pts, double *deGenPts, bool isdegen);
-    static Ref<MultiPolygonTriangulator> _create_with_normals(int ptn, double *pts, double *deGenPts, float *norms, bool isdegen);
+public:
+	static Ref<MultiPolygonTriangulator> _create();
+	static Ref<MultiPolygonTriangulator> _create_with_degenerates(int ptn, double *pts, double *deGenPts, bool isdegen);
+	static Ref<MultiPolygonTriangulator> _create_with_normals(int ptn, double *pts, double *deGenPts, float *norms, bool isdegen);
 
 	MultiPolygonTriangulator();
 	MultiPolygonTriangulator(int ptn, double *pts, double *deGenPts, bool isdegen);
@@ -85,7 +86,7 @@ protected:
 	int **ehashLeft = nullptr;
 	int **ehashRight = nullptr;
 
-	int intsTriInd[2] = {0, 0};
+	int intsTriInd[2] = { 0, 0 };
 
 	bool get_expstop() const;
 	void init(int ptn, double *pts, double *deGenPts, float *norms, bool isdegen);

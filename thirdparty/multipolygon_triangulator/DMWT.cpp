@@ -807,15 +807,15 @@ bool MultiPolygonTriangulator::tile_segment(int eind, char side, int ti, float &
 }
 
 Ref<MultiPolygonTriangulator> MultiPolygonTriangulator::_create() {
-    return Ref<MultiPolygonTriangulator>(new MultiPolygonTriangulator());
+	return Ref<MultiPolygonTriangulator>(new MultiPolygonTriangulator());
 }
 
 Ref<MultiPolygonTriangulator> MultiPolygonTriangulator::_create_with_degenerates(int ptn, double *pts, double *deGenPts, bool isdegen) {
-    return Ref<MultiPolygonTriangulator>(new MultiPolygonTriangulator(ptn, pts, deGenPts, isdegen));
+	return Ref<MultiPolygonTriangulator>(new MultiPolygonTriangulator(ptn, pts, deGenPts, isdegen));
 }
 
 Ref<MultiPolygonTriangulator> MultiPolygonTriangulator::_create_with_normals(int ptn, double *pts, double *deGenPts, float *norms, bool isdegen) {
-    return Ref<MultiPolygonTriangulator>(new MultiPolygonTriangulator(ptn, pts, deGenPts, norms, isdegen));
+	return Ref<MultiPolygonTriangulator>(new MultiPolygonTriangulator(ptn, pts, deGenPts, norms, isdegen));
 }
 
 void MultiPolygonTriangulator::_bind_methods() {
