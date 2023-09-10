@@ -1,9 +1,9 @@
+#pragma once
+
 #include "thirdparty/eigen/Eigen/Core"
 
 void refine_patch(const Eigen::MatrixXd& V, const Eigen::MatrixXi& F, float targetEdgeLength, //
     Eigen::MatrixXd& V_fine, Eigen::MatrixXi& F_fine);
-
-#include "refine.h"
 
 #include <iterator>
 #include <fstream>
@@ -11,11 +11,12 @@ void refine_patch(const Eigen::MatrixXd& V, const Eigen::MatrixXi& F, float targ
 
 #include "core/variant/variant.h"
 
-using Epick = CGAL::Exact_predicates_inexact_constructions_kernel;
-using Mesh = CGAL::Surface_mesh<Epick::Point_3>;
-using halfedge_descriptor = boost::graph_traits<Mesh>::halfedge_descriptor;
-using edge_descriptor = boost::graph_traits<Mesh>::edge_descriptor;
-namespace PMP = CGAL::Polygon_mesh_processing;
+#if 0
+// using Epick = CGAL::Exact_predicates_inexact_constructions_kernel;
+// using Mesh = CGAL::Surface_mesh<Epick::Point_3>;
+// using halfedge_descriptor = boost::graph_traits<Mesh>::halfedge_descriptor;
+// using edge_descriptor = boost::graph_traits<Mesh>::edge_descriptor;
+// namespace PMP = CGAL::Polygon_mesh_processing;
 
 struct halfedge2edge {
     halfedge2edge(const Mesh& m, std::vector<edge_descriptor>& edges) : m_mesh(m), m_edges(edges) {}
@@ -99,3 +100,4 @@ void refine_patch(const Eigen::MatrixXd& V, const Eigen::MatrixXi& F, float targ
     }
     print_line("faces ok");
 }
+#endif

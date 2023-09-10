@@ -9,7 +9,6 @@
 #include "core/templates/vector.h"
 #include "core/variant/variant.h"
 
-
 #include <stdio.h>
 #include <cmath>
 #include <fstream>

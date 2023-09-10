@@ -29,7 +29,7 @@
 /**************************************************************************/
 
 #include "register_types.h"
-#include "src/DMWT.h"
+#include "thirdparty/multipolygon_triangulator/DMWT.h"
 
 void initialize_cassie_module(ModuleInitializationLevel p_level) {
 	if (p_level != MODULE_INITIALIZATION_LEVEL_SCENE) {
