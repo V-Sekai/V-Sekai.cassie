@@ -8,7 +8,7 @@ env_cassie = env_modules.Clone()
 triangulation_sources = ["thirdparty/multipolygon_triangulator/DMWT.cpp", 
                          "thirdparty/multipolygon_triangulator/EdgeInfo.cpp",]
 
-triangulation_includes = ["thirdparty/multipolygon_triangulator"]
+triangulation_includes = ["thirdparty/multipolygon_triangulator", "src"]
 
 env_cassie.Append(CPPPATH=triangulation_includes)
 
