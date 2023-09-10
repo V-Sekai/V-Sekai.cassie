@@ -16,6 +16,15 @@
         "code",
         "research"
       ]
+    },
+    {
+      "login": "em-yu",
+      "name": "em-yu",
+      "avatar_url": "https://avatars.githubusercontent.com/u/16921936?v=4",
+      "profile": "https://github.com/em-yu",
+      "contributions": [
+        "research"
+      ]
     }
   ],
   "contributorsPerLine": 7,
