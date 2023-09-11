@@ -49,6 +49,7 @@ public:
 			int laps);
 
 	bool EXPSTOP = false;
+	bool get_expstop();
 
 protected:
 	char *filename = nullptr;
