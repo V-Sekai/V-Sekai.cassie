@@ -35,7 +35,7 @@ void initialize_cassie_module(ModuleInitializationLevel p_level) {
 	if (p_level != MODULE_INITIALIZATION_LEVEL_SCENE) {
 		return;
 	}
-	GDREGISTER_CLASS(MultiPolygonTriangulator);
+	GDREGISTER_CLASS(PolygonTriangulation);
 }
 
 void uninitialize_cassie_module(ModuleInitializationLevel p_level) {

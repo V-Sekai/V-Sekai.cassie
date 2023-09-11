@@ -16,23 +16,23 @@
 #include <string>
 
 /**
- * The MultiPolygonTriangulator class is used for triangulating multiple polygons.
+ * The PolygonTriangulation class is used for triangulating multiple polygons.
  */
-class MultiPolygonTriangulator : public RefCounted {
-	GDCLASS(MultiPolygonTriangulator, RefCounted);
+class PolygonTriangulation : public RefCounted {
+	GDCLASS(PolygonTriangulation, RefCounted);
 
 protected:
 	static void _bind_methods();
 
 public:
-	static Ref<MultiPolygonTriangulator> _create();
-	static Ref<MultiPolygonTriangulator> _create_with_degenerates(int ptn, double *pts, double *deGenPts, bool isdegen);
-	static Ref<MultiPolygonTriangulator> _create_with_normals(int ptn, double *pts, double *deGenPts, float *norms, bool isdegen);
+	static Ref<PolygonTriangulation> _create();
+	static Ref<PolygonTriangulation> _create_with_degenerates(int ptn, double *pts, double *deGenPts, bool isdegen);
+	static Ref<PolygonTriangulation> _create_with_normals(int ptn, double *pts, double *deGenPts, float *norms, bool isdegen);
 
-	MultiPolygonTriangulator();
-	MultiPolygonTriangulator(int ptn, double *pts, double *deGenPts, bool isdegen);
-	MultiPolygonTriangulator(int ptn, double *pts, double *deGenPts, float *norms, bool isdegen);
-	~MultiPolygonTriangulator();
+	PolygonTriangulation();
+	PolygonTriangulation(int ptn, double *pts, double *deGenPts, bool isdegen);
+	PolygonTriangulation(int ptn, double *pts, double *deGenPts, float *norms, bool isdegen);
+	~PolygonTriangulation();
 	void preprocess();
 	bool start();
 	void set_weights(float wtri, float wedge, float wbitri, float wtribd,

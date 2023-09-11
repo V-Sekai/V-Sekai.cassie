@@ -6,9 +6,9 @@
 
 #include "../src/DMWT.h"
 
-namespace TestMultiPolygonTriangulator {
-TEST_CASE("[Modules][MultiPolygonTriangulator] create") {
-	Ref<MultiPolygonTriangulator> triangulator = MultiPolygonTriangulator::_create();
+namespace TestPolygonTriangulation {
+TEST_CASE("[Modules][PolygonTriangulation] create") {
+	Ref<PolygonTriangulation> triangulator = PolygonTriangulation::_create();
 
 	triangulator->set_weights(1.0f, 2.0f, 3.0f, 4.0f, 5.0f);
 
@@ -16,6 +16,6 @@ TEST_CASE("[Modules][MultiPolygonTriangulator] create") {
 
 	CHECK(result == true);
 }
-} //namespace TestMultiPolygonTriangulator
+} //namespace TestPolygonTriangulation
 
 #endif

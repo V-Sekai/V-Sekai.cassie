@@ -11,7 +11,7 @@
 
 using namespace std;
 
-void MultiPolygonTriangulator::init(int ptn, double *pts, double *deGenPts, float *norms, bool isdegen) {
+void PolygonTriangulation::init(int ptn, double *pts, double *deGenPts, float *norms, bool isdegen) {
 	init_basics();
 
 	isDeGen = isdegen;
@@ -48,7 +48,7 @@ void MultiPolygonTriangulator::init(int ptn, double *pts, double *deGenPts, floa
 	}
 }
 
-MultiPolygonTriangulator::MultiPolygonTriangulator() {
+PolygonTriangulation::PolygonTriangulation() {
 	EXPSTOP = false;
 	hasIntersect = false;
 	hasIntersect2 = false;
@@ -62,15 +62,15 @@ MultiPolygonTriangulator::MultiPolygonTriangulator() {
 	numoftilingtris = 0;
 }
 
-MultiPolygonTriangulator::MultiPolygonTriangulator(int ptn, double *pts, double *deGenPts, bool isdegen) {
+PolygonTriangulation::PolygonTriangulation(int ptn, double *pts, double *deGenPts, bool isdegen) {
 	init(ptn, pts, deGenPts, nullptr, isdegen);
 }
 
-MultiPolygonTriangulator::MultiPolygonTriangulator(int ptn, double *pts, double *deGenPts, float *norms, bool isdegen) {
+PolygonTriangulation::PolygonTriangulation(int ptn, double *pts, double *deGenPts, float *norms, bool isdegen) {
 	init(ptn, pts, deGenPts, norms, isdegen);
 }
 
-MultiPolygonTriangulator::~MultiPolygonTriangulator() {
+PolygonTriangulation::~PolygonTriangulation() {
 	// tris and points will be destroyed by tetgen
 	// delete [] filename;
 	if (!EXPSTOP) {
@@ -86,7 +86,7 @@ MultiPolygonTriangulator::~MultiPolygonTriangulator() {
 	}
 }
 
-void MultiPolygonTriangulator::init_basics() {
+void PolygonTriangulation::init_basics() {
 	EXPSTOP = false;
 	hasIntersect = false;
 	hasIntersect2 = false;
@@ -104,7 +104,7 @@ void MultiPolygonTriangulator::init_basics() {
 
 //==================================Weight Functions============================//
 
-void MultiPolygonTriangulator::set_weights(float wtri, float wedge, float wbitri, float wtribd, float wwst) {
+void PolygonTriangulation::set_weights(float wtri, float wedge, float wbitri, float wtribd, float wwst) {
 	weightTri = wtri;
 	weightEdge = wedge;
 	weightBiTri = wbitri;
@@ -115,33 +115,33 @@ void MultiPolygonTriangulator::set_weights(float wtri, float wedge, float wbitri
 		useWorstDihedral = true;
 }
 
-float MultiPolygonTriangulator::cost_triangle(float measure) {
+float PolygonTriangulation::cost_triangle(float measure) {
 	return weightTri * measure;
 }
-float MultiPolygonTriangulator::cost_edge(float measure) {
+float PolygonTriangulation::cost_edge(float measure) {
 	return weightEdge * measure;
 }
-float MultiPolygonTriangulator::cost_bi_triangle(float measure) {
+float PolygonTriangulation::cost_bi_triangle(float measure) {
 	return weightBiTri * measure;
 }
-float MultiPolygonTriangulator::cost_triangle_bd(float measure) {
+float PolygonTriangulation::cost_triangle_bd(float measure) {
 	return weightTriBd * measure;
 }
 
-float MultiPolygonTriangulator::measure_edge(int v1, int v2) {
+float PolygonTriangulation::measure_edge(int v1, int v2) {
 	Vector3 p1 = point(v1);
 	Vector3 p2 = point(v2);
 	return (float)(p2 - p1).length();
 }
 
-float MultiPolygonTriangulator::measure_triangle(int v1, int v2, int v3) {
+float PolygonTriangulation::measure_triangle(int v1, int v2, int v3) {
 	Vector3 p1 = point(v1);
 	Vector3 p2 = point(v2);
 	Vector3 p3 = point(v3);
 	return (p2 - p1).cross(p3 - p2).length() / 2.0f;
 }
 
-float MultiPolygonTriangulator::measure_bi_triangle(int v1, int v2, int p, int q) {
+float PolygonTriangulation::measure_bi_triangle(int v1, int v2, int p, int q) {
 	Vector3 p1 = point(v1);
 	Vector3 p2 = point(v2);
 	Vector3 pp = point(p);
@@ -156,7 +156,7 @@ float MultiPolygonTriangulator::measure_bi_triangle(int v1, int v2, int p, int q
 	return acos(cosvalue);
 }
 
-float MultiPolygonTriangulator::measure_triangle_bd(int v1, int v2, int v3, int ni) {
+float PolygonTriangulation::measure_triangle_bd(int v1, int v2, int v3, int ni) {
 	if (!withNormal)
 		return 0.0;
 	Vector3 p1 = point(v1);
@@ -173,12 +173,12 @@ float MultiPolygonTriangulator::measure_triangle_bd(int v1, int v2, int v3, int 
 
 //==================================Tiling Functions============================//
 
-void MultiPolygonTriangulator::preprocess() {
+void PolygonTriangulation::preprocess() {
 	gen_triangle_candidates();
 	build_list();
 }
 
-void MultiPolygonTriangulator::clear_tiling() {
+void PolygonTriangulation::clear_tiling() {
 	for (int i = 0; i < numoftris; i++) {
 		triangleInfoList[i]->optCost[0] = FLT_MIN;
 		triangleInfoList[i]->optCost[1] = FLT_MIN;
@@ -193,7 +193,7 @@ void MultiPolygonTriangulator::clear_tiling() {
 	numoftilingtris = 0;
 }
 
-bool MultiPolygonTriangulator::start() {
+bool PolygonTriangulation::start() {
 	round++;
 	numoftilingtris = 0;
 	// clearTiling();
@@ -208,7 +208,7 @@ bool MultiPolygonTriangulator::start() {
 	return true;
 }
 
-void MultiPolygonTriangulator::build_tiling(int eind, char side, int ti) {
+void PolygonTriangulation::build_tiling(int eind, char side, int ti) {
 	EdgeInfo *einfo;
 	TriangleInfo *tinfo;
 	int tind, ei;
@@ -244,17 +244,17 @@ void MultiPolygonTriangulator::build_tiling(int eind, char side, int ti) {
 
 //==================================List Related Functions============================//
 
-char MultiPolygonTriangulator::get_side(int v1, int v2, int v3) {
+char PolygonTriangulation::get_side(int v1, int v2, int v3) {
 	return (v3 < v2 && v3 > v1);
 }
-char MultiPolygonTriangulator::getSide(int i) {
+char PolygonTriangulation::getSide(int i) {
 	if (i == 2)
 		return 1;
 	return 0;
 }
 
 /// return # of edges
-int MultiPolygonTriangulator::scan_triangles_once() {
+int PolygonTriangulation::scan_triangles_once() {
 	int edgenum = 0;
 	char side;
 	int min, max, sum = 0, mid, v, v1, v2;
@@ -296,7 +296,7 @@ int MultiPolygonTriangulator::scan_triangles_once() {
 	return edgenum;
 }
 
-void MultiPolygonTriangulator::build_list() {
+void PolygonTriangulation::build_list() {
 	// initialize ehash
 	ehash = new int *[numofpoints];
 	ehashLeft = new int *[numofpoints];
@@ -388,7 +388,7 @@ void MultiPolygonTriangulator::build_list() {
 
 //==================================TetGen Functions============================//
 
-void MultiPolygonTriangulator::gen_triangle_candidates() {
+void PolygonTriangulation::gen_triangle_candidates() {
 	in.resize(numofpoints);
 	int new_num_of_points = in.size() / 3;
 	memcpy(in.ptrw(), points, new_num_of_points * sizeof(Vector3));
@@ -437,19 +437,19 @@ void MultiPolygonTriangulator::gen_triangle_candidates() {
 //==================================IO Read Functions============================//
 
 //==================================IO Write Functions============================//
-void MultiPolygonTriangulator::set_point_limit(int limit) {
+void PolygonTriangulation::set_point_limit(int limit) {
 	DMWT_LIMIT = limit;
 	if (numofpoints > DMWT_LIMIT) {
 		EXPSTOP = true;
 	}
 }
-void MultiPolygonTriangulator::set_round(int r) {
+void PolygonTriangulation::set_round(int r) {
 	round = r;
 }
 
 //==================================Evaluation Functions============================//
 // intersect
-bool MultiPolygonTriangulator::triangle_share_edge(int trii, int trij) {
+bool PolygonTriangulation::triangle_share_edge(int trii, int trij) {
 	int num = 0;
 	int ipind[3];
 	int jpind[3];
@@ -468,7 +468,7 @@ bool MultiPolygonTriangulator::triangle_share_edge(int trii, int trij) {
 	return false;
 }
 
-void MultiPolygonTriangulator::save_tiling_object(char *tilefile, const double *finalPoints) {
+void PolygonTriangulation::save_tiling_object(char *tilefile, const double *finalPoints) {
 	int n = numoftilingtris;
 	std::ofstream writer(tilefile, std::ofstream::out);
 	if (!writer.good())
@@ -488,7 +488,7 @@ void MultiPolygonTriangulator::save_tiling_object(char *tilefile, const double *
 	}
 	writer.close();
 }
-void MultiPolygonTriangulator::save_mesh_obj(char *tilefile, int nT, const double *mesh) {
+void PolygonTriangulation::save_mesh_obj(char *tilefile, int nT, const double *mesh) {
 	std::ofstream writer(tilefile, std::ofstream::out);
 	if (!writer.good())
 		exit(1);
@@ -509,7 +509,7 @@ void MultiPolygonTriangulator::save_mesh_obj(char *tilefile, int nT, const doubl
 }
 
 //================ for cycle breaking project=====================
-void MultiPolygonTriangulator::get_result(double **outFaces, int *outNum, double **outPoints, float **outNorms, int *outPn, bool dosmooth,
+void PolygonTriangulation::get_result(double **outFaces, int *outNum, double **outPoints, float **outNorms, int *outPn, bool dosmooth,
 		int subd, int laps) {
 	double *finalPoints;
 	if (isDeGen) {
@@ -554,11 +554,11 @@ void MultiPolygonTriangulator::get_result(double **outFaces, int *outNum, double
 	}
 }
 
-void MultiPolygonTriangulator::set_dot(bool isdot1) { dot = isdot1 ? 1 : 2; }
+void PolygonTriangulation::set_dot(bool isdot1) { dot = isdot1 ? 1 : 2; }
 
-float MultiPolygonTriangulator::get_size() {
+float PolygonTriangulation::get_size() {
 	if (dot == 1) {
-		// DOT1 & MultiPolygonTriangulator: X-TIL+OPT=EIL,TIL_opt,Vlist,Tlist,Nlist,TiList
+		// DOT1 & PolygonTriangulation: X-TIL+OPT=EIL,TIL_opt,Vlist,Tlist,Nlist,TiList
 		int trivalLists = numoftris * 3 * sizeof(int) // tris
 				+ numofpoints * 3 * sizeof(double) // points
 				+ numofpoints * 3 * sizeof(float) // normals
@@ -571,7 +571,7 @@ float MultiPolygonTriangulator::get_size() {
 		return (float)(trivalLists + EIL + OPT) / 1048576;
 
 	} else {
-		// DOT2 & MultiPolygonTriangulator: X=EIL,TIL,Vlist,Tlist,Nlist,TiList
+		// DOT2 & PolygonTriangulation: X=EIL,TIL,Vlist,Tlist,Nlist,TiList
 		int trivalLists = numoftris * 3 * sizeof(int) // tris
 				+ numofpoints * 3 * sizeof(double) // points
 				+ numofpoints * 3 * sizeof(float) // normals
@@ -585,14 +585,14 @@ float MultiPolygonTriangulator::get_size() {
 	}
 }
 
-void MultiPolygonTriangulator::statistics() {
+void PolygonTriangulation::statistics() {
 	timeTotal = timePreprocess + timeMWT + timeTetgen;
 	const bool DO_EXP = true;
 	if (!DO_EXP) {
 		if (dot == 1)
-			cout << " [DOT1 MultiPolygonTriangulator]" << endl;
+			cout << " [DOT1 PolygonTriangulation]" << endl;
 		else
-			cout << " [DOT2 MultiPolygonTriangulator]" << endl;
+			cout << " [DOT2 PolygonTriangulation]" << endl;
 		cout << "---------------------------------" << endl;
 		cout << " File: \t\t" << filename << endl;
 		cout << " Vertex:\t" << numofpoints << endl;
@@ -613,9 +613,9 @@ void MultiPolygonTriangulator::statistics() {
 		cout << " Intersection:\t" << intsTriInd[0] << "," << intsTriInd[1] << endl;
 	} else {
 		if (dot == 1)
-			cout << "DOT1+MultiPolygonTriangulator==\t";
+			cout << "DOT1+PolygonTriangulation==\t";
 		else
-			cout << "DOT2+MultiPolygonTriangulator==\t";
+			cout << "DOT2+PolygonTriangulation==\t";
 		cout << numofpoints << "\t" << numofedges << "\t" << numoftris << "\t"
 			 << "w" << weightTri << weightEdge << weightBiTri << weightTriBd << "\t"
 			 << timeTetgen << "\t" << timePreprocess << "\t" << timeMWT << "\t"
@@ -633,7 +633,7 @@ the beginning of the algorithm). The function returns the optimal tiling cost,
 and the index of the first triangle in the tiling (adjacent to eind) in the
 triangle list of eind (-1 if eind is on the boundary).
 */
-bool MultiPolygonTriangulator::tile_segment(int eind, char side, int ti, float &thisCost,
+bool PolygonTriangulation::tile_segment(int eind, char side, int ti, float &thisCost,
 		int &thisTile) {
 	float optCost = FLT_MAX, subCost = 0.0, subCostSum;
 	int tnum, tind, tindofti = -1, ei, ejind, ejtnum;
@@ -806,37 +806,37 @@ bool MultiPolygonTriangulator::tile_segment(int eind, char side, int ti, float &
 	return true;
 }
 
-Ref<MultiPolygonTriangulator> MultiPolygonTriangulator::_create() {
-	return Ref<MultiPolygonTriangulator>(new MultiPolygonTriangulator());
+Ref<PolygonTriangulation> PolygonTriangulation::_create() {
+	return Ref<PolygonTriangulation>(new PolygonTriangulation());
 }
 
-Ref<MultiPolygonTriangulator> MultiPolygonTriangulator::_create_with_degenerates(int ptn, double *pts, double *deGenPts, bool isdegen) {
-	return Ref<MultiPolygonTriangulator>(new MultiPolygonTriangulator(ptn, pts, deGenPts, isdegen));
+Ref<PolygonTriangulation> PolygonTriangulation::_create_with_degenerates(int ptn, double *pts, double *deGenPts, bool isdegen) {
+	return Ref<PolygonTriangulation>(new PolygonTriangulation(ptn, pts, deGenPts, isdegen));
 }
 
-Ref<MultiPolygonTriangulator> MultiPolygonTriangulator::_create_with_normals(int ptn, double *pts, double *deGenPts, float *norms, bool isdegen) {
-	return Ref<MultiPolygonTriangulator>(new MultiPolygonTriangulator(ptn, pts, deGenPts, norms, isdegen));
+Ref<PolygonTriangulation> PolygonTriangulation::_create_with_normals(int ptn, double *pts, double *deGenPts, float *norms, bool isdegen) {
+	return Ref<PolygonTriangulation>(new PolygonTriangulation(ptn, pts, deGenPts, norms, isdegen));
 }
 
-void MultiPolygonTriangulator::_bind_methods() {
-	// ClassDB::bind_static_method("MultiPolygonTriangulator", D_METHOD("_create"), &DirAccess::_create);
-	// ClassDB::bind_static_method("MultiPolygonTriangulator", D_METHOD("_create_with_degenerates", "points", "degenerate_points", "is_degenerate"), &DirAccess::_create_with_degenerates);
-	// ClassDB::bind_static_method("MultiPolygonTriangulator", D_METHOD("_create_with_normals", "points", "degenerate_points", "normals", "is_degenerate"), &DirAccess::_create_with_normals);
+void PolygonTriangulation::_bind_methods() {
+	// ClassDB::bind_static_method("PolygonTriangulation", D_METHOD("_create"), &DirAccess::_create);
+	// ClassDB::bind_static_method("PolygonTriangulation", D_METHOD("_create_with_degenerates", "points", "degenerate_points", "is_degenerate"), &DirAccess::_create_with_degenerates);
+	// ClassDB::bind_static_method("PolygonTriangulation", D_METHOD("_create_with_normals", "points", "degenerate_points", "normals", "is_degenerate"), &DirAccess::_create_with_normals);
 
-	ClassDB::bind_method(D_METHOD("preprocess"), &MultiPolygonTriangulator::preprocess);
-	ClassDB::bind_method(D_METHOD("start"), &MultiPolygonTriangulator::start);
-	ClassDB::bind_method(D_METHOD("set_weights", "wtri", "wedge", "wbitri", "wtribd", "wwst"), &MultiPolygonTriangulator::set_weights);
-	ClassDB::bind_method(D_METHOD("statistics"), &MultiPolygonTriangulator::statistics);
-	ClassDB::bind_method(D_METHOD("set_round", "r"), &MultiPolygonTriangulator::set_round);
-	ClassDB::bind_method(D_METHOD("set_dot", "isdot1"), &MultiPolygonTriangulator::set_dot);
-	ClassDB::bind_method(D_METHOD("clear_tiling"), &MultiPolygonTriangulator::clear_tiling);
-	ClassDB::bind_method(D_METHOD("set_point_limit", "limit"), &MultiPolygonTriangulator::set_point_limit);
-	// ClassDB::bind_method(D_METHOD("get_result", "outFaces", "outNum", "outPoints", "outNorms", "outPn", "dosmooth", "subd", "laps"), &MultiPolygonTriangulator::get_result);
-	// ClassDB::bind_method(D_METHOD("get_result_as_matrices", "matrix1", "matrix2", "matrix3"), &MultiPolygonTriangulator::get_result_as_matrices);
+	ClassDB::bind_method(D_METHOD("preprocess"), &PolygonTriangulation::preprocess);
+	ClassDB::bind_method(D_METHOD("start"), &PolygonTriangulation::start);
+	ClassDB::bind_method(D_METHOD("set_weights", "wtri", "wedge", "wbitri", "wtribd", "wwst"), &PolygonTriangulation::set_weights);
+	ClassDB::bind_method(D_METHOD("statistics"), &PolygonTriangulation::statistics);
+	ClassDB::bind_method(D_METHOD("set_round", "r"), &PolygonTriangulation::set_round);
+	ClassDB::bind_method(D_METHOD("set_dot", "isdot1"), &PolygonTriangulation::set_dot);
+	ClassDB::bind_method(D_METHOD("clear_tiling"), &PolygonTriangulation::clear_tiling);
+	ClassDB::bind_method(D_METHOD("set_point_limit", "limit"), &PolygonTriangulation::set_point_limit);
+	// ClassDB::bind_method(D_METHOD("get_result", "outFaces", "outNum", "outPoints", "outNorms", "outPn", "dosmooth", "subd", "laps"), &PolygonTriangulation::get_result);
+	// ClassDB::bind_method(D_METHOD("get_result_as_matrices", "matrix1", "matrix2", "matrix3"), &PolygonTriangulation::get_result_as_matrices);
 
 	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "EXPSTOP"), "", "get_expstop");
 }
 
-bool MultiPolygonTriangulator::get_expstop() const {
+bool PolygonTriangulation::get_expstop() const {
 	return EXPSTOP;
 }
