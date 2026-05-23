@@ -1,0 +1,14 @@
+[remap]
+
+importer="glsl"
+type="RDShaderFile"
+uid="uid://din8vj2yxd7b"
+path="res://.godot/imported/FractalLand.glsl-ec6a1683b1a923080b59e559f5de2478.res"
+
+[deps]
+
+source_file="res://thirdparty/geogram/src/bin/geoshade/glsl/ShaderToy/FractalLand.glsl"
+dest_files=["res://.godot/imported/FractalLand.glsl-ec6a1683b1a923080b59e559f5de2478.res"]
+
+[params]
+

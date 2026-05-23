@@ -1,0 +1,14 @@
+[remap]
+
+importer="glsl"
+type="RDShaderFile"
+uid="uid://qamfakq60rhi"
+path="res://.godot/imported/ContouredLayers.glsl-96c5fa6ed94f53c0a417badedcc6bb32.res"
+
+[deps]
+
+source_file="res://thirdparty/geogram/src/bin/geoshade/glsl/ShaderToy/ContouredLayers.glsl"
+dest_files=["res://.godot/imported/ContouredLayers.glsl-96c5fa6ed94f53c0a417badedcc6bb32.res"]
+
+[params]
+

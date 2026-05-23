@@ -1,0 +1,14 @@
+[remap]
+
+importer="glsl"
+type="RDShaderFile"
+uid="uid://ddtape5f6hlbx"
+path="res://.godot/imported/TentacleObject.glsl-895b94c5f615a8df52884b1c1a090c45.res"
+
+[deps]
+
+source_file="res://thirdparty/geogram/src/bin/geoshade/glsl/ShaderToy/TentacleObject.glsl"
+dest_files=["res://.godot/imported/TentacleObject.glsl-895b94c5f615a8df52884b1c1a090c45.res"]
+
+[params]
+

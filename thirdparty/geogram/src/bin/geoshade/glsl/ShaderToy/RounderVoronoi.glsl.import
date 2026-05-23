@@ -1,0 +1,14 @@
+[remap]
+
+importer="glsl"
+type="RDShaderFile"
+uid="uid://6myxi5p3hod8"
+path="res://.godot/imported/RounderVoronoi.glsl-b340f6d69757bf13f6eec428fc4db630.res"
+
+[deps]
+
+source_file="res://thirdparty/geogram/src/bin/geoshade/glsl/ShaderToy/RounderVoronoi.glsl"
+dest_files=["res://.godot/imported/RounderVoronoi.glsl-b340f6d69757bf13f6eec428fc4db630.res"]
+
+[params]
+

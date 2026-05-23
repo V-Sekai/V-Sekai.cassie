@@ -1,0 +1,14 @@
+[remap]
+
+importer="glsl"
+type="RDShaderFile"
+uid="uid://bx5t50i0cnpok"
+path="res://.godot/imported/GeodesicTiling.glsl-e00adc951807eb3ba2a8de842e80558d.res"
+
+[deps]
+
+source_file="res://thirdparty/geogram/src/bin/geoshade/glsl/ShaderToy/GeodesicTiling.glsl"
+dest_files=["res://.godot/imported/GeodesicTiling.glsl-e00adc951807eb3ba2a8de842e80558d.res"]
+
+[params]
+

@@ -1,0 +1,14 @@
+[remap]
+
+importer="glsl"
+type="RDShaderFile"
+uid="uid://0bq2ud4ec426"
+path="res://.godot/imported/RayMarchingPrimitives.glsl-3e9062712e133ef23e04a64aa76f651b.res"
+
+[deps]
+
+source_file="res://thirdparty/geogram/src/bin/geoshade/glsl/ShaderToy/RayMarchingPrimitives.glsl"
+dest_files=["res://.godot/imported/RayMarchingPrimitives.glsl-3e9062712e133ef23e04a64aa76f651b.res"]
+
+[params]
+

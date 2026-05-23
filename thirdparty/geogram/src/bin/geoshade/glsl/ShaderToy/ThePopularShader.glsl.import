@@ -1,0 +1,14 @@
+[remap]
+
+importer="glsl"
+type="RDShaderFile"
+uid="uid://c75euwae5whpv"
+path="res://.godot/imported/ThePopularShader.glsl-09fa270fbe185e2be48d42c2965e9133.res"
+
+[deps]
+
+source_file="res://thirdparty/geogram/src/bin/geoshade/glsl/ShaderToy/ThePopularShader.glsl"
+dest_files=["res://.godot/imported/ThePopularShader.glsl-09fa270fbe185e2be48d42c2965e9133.res"]
+
+[params]
+

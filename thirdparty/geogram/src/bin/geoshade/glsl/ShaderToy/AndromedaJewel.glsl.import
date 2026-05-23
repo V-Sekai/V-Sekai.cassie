@@ -1,0 +1,14 @@
+[remap]
+
+importer="glsl"
+type="RDShaderFile"
+uid="uid://3x0cqjshqr6q"
+path="res://.godot/imported/AndromedaJewel.glsl-397a276645239c489cfad023b739220a.res"
+
+[deps]
+
+source_file="res://thirdparty/geogram/src/bin/geoshade/glsl/ShaderToy/AndromedaJewel.glsl"
+dest_files=["res://.godot/imported/AndromedaJewel.glsl-397a276645239c489cfad023b739220a.res"]
+
+[params]
+

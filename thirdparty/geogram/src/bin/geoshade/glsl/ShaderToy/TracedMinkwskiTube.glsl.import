@@ -1,0 +1,14 @@
+[remap]
+
+importer="glsl"
+type="RDShaderFile"
+uid="uid://b1w5bmcyr0ay0"
+path="res://.godot/imported/TracedMinkwskiTube.glsl-08eb51c61fbedbd859d0df9e88e70248.res"
+
+[deps]
+
+source_file="res://thirdparty/geogram/src/bin/geoshade/glsl/ShaderToy/TracedMinkwskiTube.glsl"
+dest_files=["res://.godot/imported/TracedMinkwskiTube.glsl-08eb51c61fbedbd859d0df9e88e70248.res"]
+
+[params]
+

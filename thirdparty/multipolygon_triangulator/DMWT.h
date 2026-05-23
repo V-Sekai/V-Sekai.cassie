@@ -1,124 +1,139 @@
 #ifndef _DMWT_H_
 #define _DMWT_H_
 
+#include "Configure.h"
+#include "DelaunayFaces.h"
 #include "EdgeInfo.h"
+#include "Point3.h"
 #include "TriangleInfo.h"
+#include "Vector3.h"
+#include <cmath>
+#include <fstream>
+#include <stdio.h>
+#include <string>
+#include <vector>
 
-#include "core/math/delaunay_2d.h"
-#include "core/math/delaunay_3d.h"
-#include "core/object/ref_counted.h"
-#include "core/templates/a_hash_map.h"
-#include "core/templates/vector.h"
-#include "core/variant/variant.h"
+#include <Eigen/Core>
 
-/**
- * The PolygonTriangulation class is used for triangulating multiple polygons.
- */
-class PolygonTriangulation : public RefCounted {
-	GDCLASS(PolygonTriangulation, RefCounted);
+#define RIGHT 1 //[a,b]
+#define LEFT 0  //[-infinity,a)&(b,+infinity]
+#define triangle(t, i) tris[t * 3 + i]
+#define point(v) Point3(points[v * 3], points[v * 3 + 1], points[v * 3 + 2])
+#define leftEdgeInd(ei, i) edgeInfoList[ei]->leftEdgeInd[i]
+#define leftTris(ei, i) edgeInfoList[ei]->leftTris[i]
+#define rightEdgeInd(ei, i) edgeInfoList[ei]->rightEdgeInd[i]
+#define rightTris(ei, i) edgeInfoList[ei]->rightTris[i]
 
-protected:
-	static void _bind_methods();
+namespace mwt {
 
+class DMWT {
 public:
-	static Ref<PolygonTriangulation> _create_with_degenerates(int ptn, double *pts, double *deGenPts, bool isdegen);
-	static Ref<PolygonTriangulation> _create_with_normals(int ptn, double *pts, double *deGenPts, float *norms, bool isdegen);
+  DMWT();
+  DMWT(int ptn, double* pts, double* deGenPts, bool isdegen);
+  DMWT(int ptn, double* pts, double* deGenPts, float* norms, bool isdegen);
+  ~DMWT();
+  void preprocess();
+  bool start();
+  void setWeights(float wtri, float wedge, float wbitri, float wtribd, float wwst);
 
-	PolygonTriangulation();
-	PolygonTriangulation(int ptn, double *pts, double *deGenPts, bool isdegen);
-	PolygonTriangulation(int ptn, double *pts, double *deGenPts, float *norms, bool isdegen);
-	~PolygonTriangulation();
-	void preprocess();
-	bool start();
-	void set_weights(float wtri, float wedge, float wbitri, float wtribd,
-			float wwst);
-	void statistics();
-	void set_round(int r);
-	float optimalCost;
-	void set_dot(bool isdot1);
-	void clear_tiling();
-	void set_point_limit(int limit);
+  bool reLoadNormalFile(const char* normalfile);
+  void statistics();
+  void setRound(int r);
+  float optimalCost;
+  void setDot(bool isdot1);
+  void clearTiling();
+  void setPointLimit(int limit);
 
-	void get_result(double **outFaces, int *outNum, double **outPoints,
-			float **outNorms, int *outPn, bool dosmooth, int subd,
-			int laps);
+  //------------- for cycle breaking project --------------//
+  void getResult(double** outFaces, int* outNum, double** outPoints, float** outNorms, int* outPn, bool dosmooth,
+                 int subd, int laps);
+  void getResult(int** outFaces, int* outNum, double** outPoints, float** outNorms, int* outPn);
 
-	bool EXPSTOP = false;
-	bool get_expstop();
+  void getResultAsMatrices(Eigen::MatrixXd&, Eigen::MatrixXi&);
+  void getResultAsMatrices(Eigen::MatrixXd&, Eigen::MatrixXi&, Eigen::MatrixXd&);
+
+  bool EXPSTOP;
 
 protected:
-	char *filename = nullptr;
-	Vector<Vector3> in;
-	Vector<Delaunay3D::OutputSimplex> tetrahedra;
-	int round = 0;
-	int startEdge = 0;
-	bool withNormal = false;
-	bool useBiTri = false;
-	bool hasIntersect = false; // Intersect
-	bool hasIntersect2 = false;
-	char dot = '\0';
-	int DMWT_LIMIT = 0;
+  //-------------variables--------------//
+  char* filename;
+  cassie::DelaunayFaces delaunay;
+  int round;
+  int startEdge;
+  bool withNormal;
+  bool useBiTri;
+  bool hasIntersect; // Intersect
+  bool hasIntersect2;
+  char dot;
+  int DMWT_LIMIT;
 
-	int numofpoints = 0;
-	int numoftris = 0;
-	int numofedges = 0;
-	int numofnormals = 0;
-	int numoftilingtris = 0;
-	int *tris = nullptr;
-	double *points = nullptr;
-	double *deGenPoints = nullptr;
-	float *normals = nullptr;
-	EdgeInfo **edgeInfoList = nullptr;
-	TriangleInfo **triangleInfoList = nullptr;
-	int *tiling = nullptr;
+  int numofpoints;
+  int numoftris;
+  int numofedges;
+  int numofnormals;
+  int numoftilingtris;
+  int* tris;
+  double* points;
+  double* deGenPoints;
+  float* normals;
+  EdgeInfo** edgeInfoList;
+  TriangleInfo** triangleInfoList;
+  int* tiling;
 
-	float weightTri = 0.0f;
-	float weightEdge = 0.0f;
-	float weightBiTri = 0.0f;
-	float weightTriBd = 0.0f;
-	bool useWorstDihedral = false;
+  float weightTri;
+  float weightEdge;
+  float weightBiTri;
+  float weightTriBd;
+  bool useWorstDihedral;
 
-	int **ehash = nullptr;
-	int **ehashLeft = nullptr;
-	int **ehashRight = nullptr;
+  int** ehash;
+  int** ehashLeft;
+  int** ehashRight;
 
-	int intsTriInd[2] = { 0, 0 };
+  int intsTriInd[2];
 
-	bool get_expstop() const;
-	void init(int ptn, double *pts, double *deGenPts, float *norms, bool isdegen);
-	int scan_triangles_once();
-	char get_side(int v1, int v2, int v3);
+  //-------------functions--------------//
+  int scanTrianglesOnce();
+  char getSide(int v1, int v2, int v3);
 
-	float measure_edge(int v1, int v2);
-	float measure_triangle(int v1, int v2, int v3);
-	float measure_bi_triangle(int v1, int v2, int p, int q);
-	float measure_triangle_bd(int v1, int v2, int v3, int ni);
-	float cost_triangle(float measure);
-	float cost_edge(float measure);
-	float cost_bi_triangle(float measure);
-	float cost_triangle_bd(float measure);
+  float measureEdge(int v1, int v2);
+  float measureTri(int v1, int v2, int v3);
+  float measureBiTri(int v1, int v2, int p, int q);
+  float measureTriBd(int v1, int v2, int v3, int ni);
+  float costTri(float measure);
+  float costEdge(float measure);
+  float costBiTri(float measure);
+  float costTriBd(float measure);
 
-	bool tile_segment(int eind, char side, int ti, float &thiscost, int &thistile);
-	void build_tiling(int eind, char side, int ti);
-	void build_list();
-	void gen_triangle_candidates();
-	char getSide(int i);
+  bool tileSegment(int eind, char side, int ti, float& thiscost, int& thistile);
+  void buildTiling(int eind, char side, int ti);
+  void buildList();
+  void genTriCandidates();
+  char getSide(int i);
 
-	void init_basics();
-	bool triangle_share_edge(int trii, int trij);
+  void initBasics();
+  bool triShareEdge(int trii, int trij);
 
-	// ------------------- for cycle project -----------------//
-	bool isDeGen = false; // degenerated cases: plane
-	void save_tiling_object(char *tilefile, const double *finalPoints);
-	void save_mesh_obj(char *tilefile, int nT, const double *mesh);
+  // ------------------- for cycle project -----------------//
+  bool isDeGen; // degenerated cases: plane
+  void saveTilingObj(char* tilefile, const double* finalPoints);
+  void saveMeshObj(char* tilefile, int nT, const double* mesh);
 
-	//-------------evaluations--------------//
-	float timeReadIn;
-	float timePreprocess;
-	float timeMWT;
-	float timeTotal;
-	float timeDelaunay3d;
-	float get_size();
+  //-------------evaluations--------------//
+  float timeReadIn;
+  float timePreprocess;
+  float timeMWT;
+  float timeTotal;
+  float timeDelaunay;
+  float getSize();
+
+  // Not used for now
+  int numofcurves;
+  bool isOpen;
+  int capacity;
+  int maxFacePerEdge;
 };
+
+}  // namespace mwt
 
 #endif

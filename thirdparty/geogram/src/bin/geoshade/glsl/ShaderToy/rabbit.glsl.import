@@ -1,0 +1,14 @@
+[remap]
+
+importer="glsl"
+type="RDShaderFile"
+uid="uid://ca6ji4q8o4k0m"
+path="res://.godot/imported/rabbit.glsl-ccf40916fc25408b566a62fd1ca5fb8a.res"
+
+[deps]
+
+source_file="res://thirdparty/geogram/src/bin/geoshade/glsl/ShaderToy/rabbit.glsl"
+dest_files=["res://.godot/imported/rabbit.glsl-ccf40916fc25408b566a62fd1ca5fb8a.res"]
+
+[params]
+

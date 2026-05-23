@@ -1,0 +1,14 @@
+[remap]
+
+importer="glsl"
+type="RDShaderFile"
+uid="uid://b80oq4tp0dcic"
+path="res://.godot/imported/Voxels.glsl-0077796f7ce7b8ca554da71746ac9965.res"
+
+[deps]
+
+source_file="res://thirdparty/geogram/src/bin/geoshade/glsl/ShaderToy/Voxels.glsl"
+dest_files=["res://.godot/imported/Voxels.glsl-0077796f7ce7b8ca554da71746ac9965.res"]
+
+[params]
+

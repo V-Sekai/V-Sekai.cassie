@@ -1,0 +1,14 @@
+[remap]
+
+importer="glsl"
+type="RDShaderFile"
+uid="uid://l86efdsp65m3"
+path="res://.godot/imported/HappyJumping.glsl-2de5a8a06736881900e05937345eca46.res"
+
+[deps]
+
+source_file="res://thirdparty/geogram/src/bin/geoshade/glsl/ShaderToy/HappyJumping.glsl"
+dest_files=["res://.godot/imported/HappyJumping.glsl-2de5a8a06736881900e05937345eca46.res"]
+
+[params]
+

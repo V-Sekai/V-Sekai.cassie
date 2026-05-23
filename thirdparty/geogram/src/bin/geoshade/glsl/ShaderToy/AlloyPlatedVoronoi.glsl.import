@@ -1,0 +1,14 @@
+[remap]
+
+importer="glsl"
+type="RDShaderFile"
+uid="uid://dk1dvu1h864ne"
+path="res://.godot/imported/AlloyPlatedVoronoi.glsl-1f03ac3af9990920dc11487bcd84cb05.res"
+
+[deps]
+
+source_file="res://thirdparty/geogram/src/bin/geoshade/glsl/ShaderToy/AlloyPlatedVoronoi.glsl"
+dest_files=["res://.godot/imported/AlloyPlatedVoronoi.glsl-1f03ac3af9990920dc11487bcd84cb05.res"]
+
+[params]
+

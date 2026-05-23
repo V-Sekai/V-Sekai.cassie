@@ -1,0 +1,14 @@
+[remap]
+
+importer="glsl"
+type="RDShaderFile"
+uid="uid://bur6ds8al1iah"
+path="res://.godot/imported/VoxelPacMan.glsl-18b1f1f2c7aeb1571c82189d9338e28d.res"
+
+[deps]
+
+source_file="res://thirdparty/geogram/src/bin/geoshade/glsl/ShaderToy/VoxelPacMan.glsl"
+dest_files=["res://.godot/imported/VoxelPacMan.glsl-18b1f1f2c7aeb1571c82189d9338e28d.res"]
+
+[params]
+

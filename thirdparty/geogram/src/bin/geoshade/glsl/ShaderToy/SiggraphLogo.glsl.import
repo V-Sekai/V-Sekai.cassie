@@ -1,0 +1,14 @@
+[remap]
+
+importer="glsl"
+type="RDShaderFile"
+uid="uid://bs0mt8ujbt2ix"
+path="res://.godot/imported/SiggraphLogo.glsl-e8e541e458359dbf37ddcd79762de5c2.res"
+
+[deps]
+
+source_file="res://thirdparty/geogram/src/bin/geoshade/glsl/ShaderToy/SiggraphLogo.glsl"
+dest_files=["res://.godot/imported/SiggraphLogo.glsl-e8e541e458359dbf37ddcd79762de5c2.res"]
+
+[params]
+

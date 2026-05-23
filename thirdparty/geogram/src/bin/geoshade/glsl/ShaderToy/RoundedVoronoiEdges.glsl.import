@@ -1,0 +1,14 @@
+[remap]
+
+importer="glsl"
+type="RDShaderFile"
+uid="uid://cjwx64sl0puw6"
+path="res://.godot/imported/RoundedVoronoiEdges.glsl-62f63010c36a8099bf3304b8c2db06e7.res"
+
+[deps]
+
+source_file="res://thirdparty/geogram/src/bin/geoshade/glsl/ShaderToy/RoundedVoronoiEdges.glsl"
+dest_files=["res://.godot/imported/RoundedVoronoiEdges.glsl-62f63010c36a8099bf3304b8c2db06e7.res"]
+
+[params]
+

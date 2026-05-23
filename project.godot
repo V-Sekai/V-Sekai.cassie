@@ -1,0 +1,14 @@
+; Smoke-test project for the cassie GDExtension.
+; Loads bin/cassie.gdextension and exercises each registered class
+; from tests/smoke_test.gd via `godot --headless --script ...`.
+
+config_version=5
+
+[application]
+
+config/name="cassie-smoke"
+config/features=PackedStringArray("4.4")
+
+[debug]
+
+settings/stdout/print_fps=false

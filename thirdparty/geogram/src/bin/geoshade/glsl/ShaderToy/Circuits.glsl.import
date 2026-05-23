@@ -1,0 +1,14 @@
+[remap]
+
+importer="glsl"
+type="RDShaderFile"
+uid="uid://cvprtwgne1nh3"
+path="res://.godot/imported/Circuits.glsl-72960a688af304f0dce9d94a3fcf6339.res"
+
+[deps]
+
+source_file="res://thirdparty/geogram/src/bin/geoshade/glsl/ShaderToy/Circuits.glsl"
+dest_files=["res://.godot/imported/Circuits.glsl-72960a688af304f0dce9d94a3fcf6339.res"]
+
+[params]
+

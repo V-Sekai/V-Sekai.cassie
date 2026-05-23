@@ -1,0 +1,14 @@
+[remap]
+
+importer="glsl"
+type="RDShaderFile"
+uid="uid://cwt66vtm58ujo"
+path="res://.godot/imported/raytrace_step4.glsl-ab41a546f09a29fc23397b1d6d04c4af.res"
+
+[deps]
+
+source_file="res://thirdparty/geogram/src/bin/geoshade/glsl/course/raytrace_step4.glsl"
+dest_files=["res://.godot/imported/raytrace_step4.glsl-ab41a546f09a29fc23397b1d6d04c4af.res"]
+
+[params]
+

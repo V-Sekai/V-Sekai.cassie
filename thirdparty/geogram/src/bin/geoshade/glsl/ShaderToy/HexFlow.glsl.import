@@ -1,0 +1,14 @@
+[remap]
+
+importer="glsl"
+type="RDShaderFile"
+uid="uid://dx5lwok5ww5rs"
+path="res://.godot/imported/HexFlow.glsl-c64bfff85c92822f11326a88503b6719.res"
+
+[deps]
+
+source_file="res://thirdparty/geogram/src/bin/geoshade/glsl/ShaderToy/HexFlow.glsl"
+dest_files=["res://.godot/imported/HexFlow.glsl-c64bfff85c92822f11326a88503b6719.res"]
+
+[params]
+

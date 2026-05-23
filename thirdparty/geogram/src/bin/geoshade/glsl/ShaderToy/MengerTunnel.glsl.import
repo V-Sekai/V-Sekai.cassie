@@ -1,0 +1,14 @@
+[remap]
+
+importer="glsl"
+type="RDShaderFile"
+uid="uid://bph2re4k3a5l3"
+path="res://.godot/imported/MengerTunnel.glsl-a98cba0e68133d4bf4d8bbc9d7e2ba27.res"
+
+[deps]
+
+source_file="res://thirdparty/geogram/src/bin/geoshade/glsl/ShaderToy/MengerTunnel.glsl"
+dest_files=["res://.godot/imported/MengerTunnel.glsl-a98cba0e68133d4bf4d8bbc9d7e2ba27.res"]
+
+[params]
+

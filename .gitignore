@@ -1,2 +1,28 @@
-__pycache__/
+# --- Build output ---
+build/
 *.o
+*.obj
+bin/*.pdb
+bin/*.exp
+bin/*.lib
+bin/~*
+bin/libcassie*
+
+# --- Godot project cache ---
+.godot/
+
+# --- Python ---
+__pycache__/
+
+# --- godot-cpp (fetched, not vendored) ---
+# Users clone separately:
+#   git clone --depth 1 --branch 4.4 https://github.com/godotengine/godot-cpp.git godot-cpp
+godot-cpp/
+
+# --- Editor / IDE ---
+*.user
+*.suo
+*.tlog
+.vs/
+.vscode/
+.idea/

@@ -1,0 +1,14 @@
+[remap]
+
+importer="glsl"
+type="RDShaderFile"
+uid="uid://c0nxasi8l7k33"
+path="res://.godot/imported/QuadTreeTruchet.glsl-aed62127e8344bb4bb5a590434d8e5f6.res"
+
+[deps]
+
+source_file="res://thirdparty/geogram/src/bin/geoshade/glsl/ShaderToy/QuadTreeTruchet.glsl"
+dest_files=["res://.godot/imported/QuadTreeTruchet.glsl-aed62127e8344bb4bb5a590434d8e5f6.res"]
+
+[params]
+

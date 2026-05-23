@@ -1,0 +1,14 @@
+[remap]
+
+importer="glsl"
+type="RDShaderFile"
+uid="uid://c0qb56wgnd067"
+path="res://.godot/imported/JellyTubes.glsl-979dee97d24a8a3a13fee4adfc092b58.res"
+
+[deps]
+
+source_file="res://thirdparty/geogram/src/bin/geoshade/glsl/ShaderToy/JellyTubes.glsl"
+dest_files=["res://.godot/imported/JellyTubes.glsl-979dee97d24a8a3a13fee4adfc092b58.res"]
+
+[params]
+
