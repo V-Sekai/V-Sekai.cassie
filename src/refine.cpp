@@ -1,7 +1,5 @@
 #include "refine.h"
 
-#include "inflate.h"
-
 #include <pmp/algorithms/remeshing.h>
 #include <pmp/surface_mesh.h>
 
@@ -42,13 +40,13 @@ void refine_patch(const Eigen::MatrixXd& V, const Eigen::MatrixXi& F, float targ
     pmp::uniform_remeshing(mesh, static_cast<pmp::Scalar>(targetEdgeLength),
                            nb_iter, /*use_projection=*/true);
 
-    // Teddy-style inflation backed by heat-method geodesic distance.
-    // No more soap-film aesthetic (the curvature-flow smoothing pass
-    // is gone) and no more medial-axis ridges (the smooth distance
-    // field replaces the C0 min-over-edges distance the earlier
-    // inflate version used).
-    constexpr double kInflateAmplitude = 0.5;
-    cassie::inflate(mesh, kInflateAmplitude);
+    // No inflation pass: the remesher's use_projection=true keeps every
+    // vertex on the DMWT-output surface (which interpolates the input
+    // boundary), so the result is a clean refinement of the patch the
+    // user drew. Adding a hemispherical bulge in either direction here
+    // was a misfeature -- it produced "balloon" artefacts on planar
+    // sketches and oriented the bulge inconsistently relative to the
+    // user's view, which is what motivated removing it.
 
     // Write back to V_fine, F_fine.
     V_fine.setZero(static_cast<Eigen::Index>(mesh.n_vertices()), 3);

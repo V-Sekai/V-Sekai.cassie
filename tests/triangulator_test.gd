@@ -30,8 +30,8 @@ func _initialize() -> void:
 		var nF: int = faces.size() / 3
 		# Loose upper bound: unit hexagon at target=10 should yield
 		# well under 50 vertices. The bare DMWT output for hex is
-		# 6v / 4f (n-2); inflation may add a few interior vertices
-		# but pmp shouldn't subdivide anything.
+		# 6v / 4f (n-2); pmp shouldn't subdivide anything at this
+		# target edge length.
 		if verts.size() < 50 and nF > 0:
 			print("[ctr][PASS] large_target_no_explode: nV=%d nF=%d" % [verts.size(), nF])
 		else:
@@ -39,11 +39,11 @@ func _initialize() -> void:
 			fails += 1
 
 	# Cycle 31: stronger manifold check. After full pipeline (DMWT +
-	# pmp uniform_remeshing + inflate), every edge must be shared by
-	# exactly 1 (boundary) or 2 (interior) faces. properties_test
-	# only flags >2; this also catches dangling edges (count==0 is
-	# impossible by construction, but the fold doubles as a sanity
-	# check on faces output).
+	# pmp uniform_remeshing), every edge must be shared by exactly
+	# 1 (boundary) or 2 (interior) faces. properties_test only flags
+	# >2; this also catches dangling edges (count==0 is impossible
+	# by construction, but the fold doubles as a sanity check on
+	# faces output).
 	var pent := PackedVector3Array([
 		Vector3(0, 0, 0), Vector3(1, 0, 0),
 		Vector3(1.5, 0.5, 0), Vector3(1, 1, 0), Vector3(0, 1, 0),

@@ -16,10 +16,10 @@ using namespace godot;
 //   1. Serialize concurrent callers (Geogram / pmp / Eigen have
 //      process-global state that's not individually thread-safe).
 //   2. Reset the Point3 perturb RNG for call-to-call determinism.
-//   3. nB == 3 fast path: skip DMWT, run pmp::uniform_remeshing +
-//      heat-method inflation directly on the input triangle.
+//   3. nB == 3 fast path: skip DMWT, run pmp::uniform_remeshing
+//      directly on the input triangle.
 //   4. Otherwise: MingCurve edge protection -> V-Sekai PolygonTriangulation
-//      (DMWT) -> refine_patch (pmp isotropic_remeshing + inflate).
+//      (DMWT) -> refine_patch (pmp uniform_remeshing, use_projection=true).
 //
 // Returns a Dictionary with keys:
 //   - "success":  bool

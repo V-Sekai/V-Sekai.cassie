@@ -6,6 +6,20 @@ cmake_minimum_required(VERSION 3.17...3.30)
 # (mirrors the cassie-triangulation TetGen->Geogram swap).
 project(cassie LANGUAGES CXX)
 
+# Block find_package(OpenMP) globally. pmp-library does
+# `find_package(OpenMP); target_link_libraries(pmp PUBLIC OpenMP::OpenMP_CXX)`
+# which on MSVC propagates /openmp into our library and creates a
+# VCOMP140.DLL runtime dependency. Godot's exported game/template
+# build won't have vcomp140 next to the extension, and the user's
+# machine may not have the VC++ redistributable, so the .dll fails
+# to load there. Our workloads are mesh sizes in the dozens to
+# hundreds of triangles -- OpenMP overhead dwarfs any parallel
+# speedup. Plus EIGEN_DONT_PARALLELIZE to make sure no Eigen
+# internal path tries to use OpenMP if some other dep still finds
+# it. (Mirrors cassie-triangulation/CMakeLists.txt.)
+set(CMAKE_DISABLE_FIND_PACKAGE_OpenMP TRUE)
+add_compile_definitions(EIGEN_DONT_PARALLELIZE)
+
 # --- Geogram options (must be set before add_subdirectory) ---
 # Same exclusions used in cassie-triangulation/libs/CMakeLists.txt:
 # strip every option whose license is incompatible with our shipping
@@ -69,10 +83,6 @@ add_library(${TARGET_NAME} SHARED
     src/polygon_triangulation_godot.h
     src/refine.cpp
     src/refine.h
-    src/heat_distance.cpp
-    src/heat_distance.h
-    src/inflate.cpp
-    src/inflate.h
     thirdparty/multipolygon_triangulator/DelaunayFaces.cpp
     thirdparty/multipolygon_triangulator/DelaunayFaces.h
     thirdparty/multipolygon_triangulator/DMWT.cpp

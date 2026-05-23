@@ -5,8 +5,9 @@ extends SceneTree
 # Fixed-input smokes for CASSIE-realistic boundary shapes: sleeve,
 # helix, phone outline, star, triangle. Each calls
 # CassieTriangulator.triangulate and asserts non-trivial output +
-# that inflation actually fired (output AABB excess > 2% of input
-# diagonal along at least one axis).
+# that the output stays within (or very close to) the input AABB
+# -- i.e. no inflation/bulge pass is displacing interior vertices
+# outside the patch the user drew.
 
 const PI := 3.14159265358979323846
 
@@ -31,7 +32,7 @@ func _bounds_excess(input_pts: PackedVector3Array, output_pts: PackedVector3Arra
 
 	return {"diag": in_diag, "excess": excess}
 
-func _run_shape(name: String, boundary: PackedVector3Array, tgt: float, min_nf: int, check_inflation: bool) -> bool:
+func _run_shape(name: String, boundary: PackedVector3Array, tgt: float, min_nf: int, check_bulge: bool) -> bool:
 	var res: Dictionary = CassieTriangulator.triangulate(boundary, tgt)
 	if not res.get("success", false):
 		print("[shapes][FAIL] %s: triangulate returned success=false" % name)
@@ -42,11 +43,11 @@ func _run_shape(name: String, boundary: PackedVector3Array, tgt: float, min_nf: 
 	if nf < min_nf:
 		print("[shapes][FAIL] %s: nF=%d < min %d" % [name, nf, min_nf])
 		return false
-	if check_inflation:
+	if check_bulge:
 		var b := _bounds_excess(boundary, verts)
-		var threshold: float = 0.02 * b["diag"]
-		if b["excess"] < threshold:
-			print("[shapes][FAIL] %s: inflation excess %.4f < threshold %.4f (diag=%.4f)" % [name, b["excess"], threshold, b["diag"]])
+		var max_allowed: float = 0.02 * b["diag"]
+		if b["excess"] > max_allowed:
+			print("[shapes][FAIL] %s: AABB excess %.4f > cap %.4f (diag=%.4f) -- bulge pass may have been re-introduced" % [name, b["excess"], max_allowed, b["diag"]])
 			return false
 		print("[shapes][PASS] %s: nB=%d tgt=%.2f -> nV=%d nF=%d excess=%.3f" % [name, boundary.size(), tgt, verts.size(), nf, b["excess"]])
 	else:
@@ -137,9 +138,9 @@ func _initialize() -> void:
 	if not _run_shape("helix",    _helix(),    0.25, 8,  true):  fails += 1
 	if not _run_shape("phone",    _phone(),    0.3,  20, true):  fails += 1
 	if not _run_shape("star",     _star(),     0.3,  10, true):  fails += 1
-	# nB=3: bare triangle; inflation effectively no-ops here (heat
-	# d_max is tiny for a single triangle), so skip the AABB-excess
-	# check. The point is "doesn't crash and yields >= 1 face".
+	# nB=3: bare triangle. AABB diagonal along the normal is zero,
+	# so the excess check has no meaningful denominator. Just verify
+	# it doesn't crash and yields >= 1 face.
 	if not _run_shape("triangle", _triangle(), 0.3,  1,  false): fails += 1
 
 	if fails == 0:

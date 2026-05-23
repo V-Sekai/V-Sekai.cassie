@@ -170,7 +170,9 @@ Dictionary CassieTriangulator::triangulate(const PackedVector3Array &p_boundary,
     Eigen::MatrixXi F;
     dmwt.getResultAsMatrices(V, F);
 
-    // 4. pmp::uniform_remeshing + heat-method dome inflation.
+    // 4. pmp::uniform_remeshing with use_projection=true. No inflation
+    //    pass -- output stays on the DMWT surface (which interpolates
+    //    the input boundary), matching the patch the user drew.
     Eigen::MatrixXd V_fine;
     Eigen::MatrixXi F_fine;
     refine_patch(V, F, p_target_edge_length, V_fine, F_fine);
