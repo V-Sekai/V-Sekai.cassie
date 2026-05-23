@@ -81,6 +81,14 @@ Dictionary CassieTriangulator::triangulate(const PackedVector3Array &p_boundary,
         return make_failure();
     }
 
+    // Reject non-positive target_edge_length. pmp's split_long_edges
+    // loop divides by the target; <= 0 causes either divide-by-zero
+    // or a non-terminating split loop (every edge stays "too long").
+    // NaN passes neither comparison so it also lands here.
+    if (!(p_target_edge_length > 0.0f)) {
+        return make_failure();
+    }
+
     // Flatten the boundary to a stride-3 double array (the form
     // MingCurve / DMWT / refine_patch consume).
     std::vector<double> flat_boundary;

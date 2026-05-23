@@ -11,6 +11,9 @@ bin/libcassie*
 # --- Godot project cache ---
 .godot/
 
+# --- Claude Code session state ---
+.claude/
+
 # --- Python ---
 __pycache__/
 
